@@ -2,7 +2,7 @@
 #include <string>
 #include <string.h>
 
-#define TAILLETAB 1 //La nombre d'enregistrement de CID
+#define TAILLETAB 2 //La nombre d'enregistrement de CID
 
 typedef enum class civ {H, F}civ; //Un enum pour Homme et Femme
 
@@ -66,6 +66,8 @@ int main() {
 		if (tablo[numero] != nullptr) {
 			*tablo[numero] = askCid(); //Fonction pour l'identité
 		}
+
+		tablo[numero]->n_id = numero;
 
 		tablo[numero]->t_ddn = (ddn*)malloc(sizeof(ddn));
 		if (tablo[numero]->t_ddn != nullptr) {
@@ -142,7 +144,7 @@ ddn askDdn() {
 
 	ddn tempo; //On recreer une variable temporaire
 
-	printf_s("\nVotre date de naissance ? "); //Pas besoin d'allocation, ce sont des entiers
+	printf_s("\nVotre annee de naissance ? "); //Pas besoin d'allocation, ce sont des entiers
 	scanf_s("%d", &tempo.n_annee);
 
 	printf_s("Votre mois de naissance ? ");
@@ -175,7 +177,7 @@ adresse askAdr() {
 	printf_s("Code postale ? ");
 	scanf_s("%d", &tempo.n_cp);
 
-	printf_s("Numero et nom de rue ? ");
+	printf_s("Nom de la rue ? ");
 	tempo.str_rue = (char*)malloc(255*sizeof(char));
 	scanf_s("%s", tempo.str_rue, 255);
 
@@ -197,7 +199,7 @@ void impTab(cid* tablo[TAILLETAB]) {
 	for (int n_i = 0; n_i < TAILLETAB; n_i++) { //On repete pour tout le tableau
 
 		printf_s("\n- - - - - - - - - - -"); //Et un peu de mise en forme
-		printf_s("\n\nId : %d / Nom : %s / Prenom : %s", tablo[n_i]->e_civ, tablo[n_i]->str_nom, tablo[n_i]->str_prenom);
+		printf_s("\n\nId : %d / Nom : %s / Prenom : %s", tablo[n_i]->n_id, tablo[n_i]->str_nom, tablo[n_i]->str_prenom);
 		printf_s("\n\nDate de naissance : %d / %d / %d", tablo[n_i]->t_ddn->n_jour, tablo[n_i]->t_ddn->n_mois, tablo[n_i]->t_ddn->n_annee);
 		printf_s("\n\nVille : %s / Code postale : %d", tablo[n_i]->t_adr->str_ville, tablo[n_i]->t_adr->n_cp);
 		printf_s("\nAdresse : %s\n", tablo[n_i]->t_adr->str_rue); // /!\ PROBLEME /!\ N'affiche que le premier mot et prend pas après les espaces, pas trouvé de soluce
